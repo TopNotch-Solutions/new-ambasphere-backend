@@ -714,9 +714,33 @@ exports.updateContracts = async (req, res) => { // Renamed function
   const fieldsToUpdate = {};
   if (PackagePrice !== undefined) fieldsToUpdate.PackagePrice = PackagePrice;
   if (PackagePaymentPeriod !== undefined) fieldsToUpdate.PackagePaymentPeriod = PackagePaymentPeriod;
-  if (UpfrontPayment !== undefined) fieldsToUpdate.UpfrontPayment = UpfrontPayment;
-  if (DevicePrice !== undefined) fieldsToUpdate.DevicePrice = DevicePrice;
-  if (DeviceMonthlyPrice !== undefined) fieldsToUpdate.DeviceMonthlyPrice = DeviceMonthlyPrice;
+  if (UpfrontPayment !== undefined) {
+    // Convert empty string to 0, and ensure it's a valid number
+    try {
+      fieldsToUpdate.UpfrontPayment = UpfrontPayment === "" || UpfrontPayment === null ? 0 : parseFloat(UpfrontPayment) || 0;
+    } catch (error) {
+      logger.warn(`Invalid UpfrontPayment value: ${UpfrontPayment}, defaulting to 0`);
+      fieldsToUpdate.UpfrontPayment = 0;
+    }
+  }
+  if (DevicePrice !== undefined) {
+    // Convert empty string to 0, and ensure it's a valid number
+    try {
+      fieldsToUpdate.DevicePrice = DevicePrice === "" || DevicePrice === null ? 0 : parseFloat(DevicePrice) || 0;
+    } catch (error) {
+      logger.warn(`Invalid DevicePrice value: ${DevicePrice}, defaulting to 0`);
+      fieldsToUpdate.DevicePrice = 0;
+    }
+  }
+  if (DeviceMonthlyPrice !== undefined) {
+    // Convert empty string to 0, and ensure it's a valid number
+    try {
+      fieldsToUpdate.DeviceMonthlyPrice = DeviceMonthlyPrice === "" || DeviceMonthlyPrice === null ? 0 : parseFloat(DeviceMonthlyPrice) || 0;
+    } catch (error) {
+      logger.warn(`Invalid DeviceMonthlyPrice value: ${DeviceMonthlyPrice}, defaulting to 0`);
+      fieldsToUpdate.DeviceMonthlyPrice = 0;
+    }
+  }
   if (ApprovalStatus !== undefined) fieldsToUpdate.ApprovalStatus = ApprovalStatus;
   if (MSISDN !== undefined) fieldsToUpdate.MSISDN = MSISDN;
 
