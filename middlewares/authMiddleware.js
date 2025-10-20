@@ -98,7 +98,7 @@ module.exports.checkAllUsers = (req, res, next) => {
   }
 
   try {
-    if (req.user.RoleID >= 8) {
+    if (req.user.RoleID !== 1 && req.user.RoleID !== 3 && req.user.RoleID !== 9 && req.user.RoleID !== 10 && req.user.RoleID !== 11) {
       return res.status(403).json({
         status: "FAILURE",
         message: "Access denied. User is not an admin or user.",
@@ -123,7 +123,7 @@ module.exports.checkTempUsers = (req, res, next) => {
   }
 
   try {
-    if (req.user.RoleID > 8) {
+    if (req.user.RoleID !== 1 && req.user.RoleID !== 3 && req.user.RoleID !== 9 && req.user.RoleID !== 10 && req.user.RoleID !== 11) {
       return res.status(403).json({
         status: "FAILURE",
         message: "Access denied. User is not an admin or user.",
@@ -198,7 +198,7 @@ module.exports.checkFixedAssetTeam = (req, res, next) => {
   }
 
   try {
-    if (req.user.RoleID !==4) {
+    if (req.user.RoleID !== 1 && req.user.RoleID !== 3 && req.user.RoleID !== 9 && req.user.RoleID !== 10 && req.user.RoleID !== 11) {
       return res.status(403).json({
         status: "FAILURE",
         message: "Access denied. User is not an admin or user.",
@@ -299,7 +299,7 @@ module.exports.checkFinance = (req, res, next) => {
   }
 
   try {
-    if (req.user.RoleID != 9) {
+    if (req.user.RoleID !== 1 && req.user.RoleID !== 3 && req.user.RoleID !== 9 && req.user.RoleID !== 10 && req.user.RoleID !== 11) {
       return res.status(403).json({
         status: "FAILURE",
         message: "Access denied. User is not authorized for finance operations.",
@@ -324,7 +324,7 @@ module.exports.checkRetail = (req, res, next) => {
   }
 
   try {
-    if (req.user.RoleID != 10) {
+    if (req.user.RoleID !== 1 && req.user.RoleID !== 3 && req.user.RoleID !== 9 && req.user.RoleID !== 10 && req.user.RoleID !== 11) {
       return res.status(403).json({
         status: "FAILURE",
         message: "Access denied. User is not authorized for retail operations.",
@@ -350,7 +350,7 @@ module.exports.checkWarehouse = (req, res, next) => {
   }
 
   try {
-    if (req.user.RoleID != 11) {
+    if (req.user.RoleID !== 1 && req.user.RoleID !== 3 && req.user.RoleID !== 9 && req.user.RoleID !== 10 && req.user.RoleID !== 11) {
       return res.status(403).json({
         status: "FAILURE",
         message: "Access denied. User is not authorized for warehouse operations.",
