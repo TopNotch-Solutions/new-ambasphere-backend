@@ -2689,9 +2689,17 @@ exports.uploadCollectionProof = async (req, res) => {
     const collectionProofUrl = `/collection-proofs/HR-${handset.id.toString().padStart(4, '0')}-${Date.now()}.pdf`;
     
     // Update handset with collection proof
+    // Resolve actual collection date and compute renewal date (+2 years)
+    const actualCollectionDate = collectionDate ? new Date(collectionDate) : new Date();
+    const renewalDate = new Date(actualCollectionDate);
+    renewalDate.setFullYear(renewalDate.getFullYear() + 2);
+
     await handset.update({
       CollectionProofUrl: collectionProofUrl,
-      CollectionDate: collectionDate ? new Date(collectionDate) : new Date(),
+      CollectionDate: actualCollectionDate,
+      RenewalDate: renewalDate,
+      RenewalVerifiedBy: "Ambasphere System",
+      RenewalVerifiedDate: new Date(),
       CollectedBy: collectedBy || uploadedBy,
       CollectionProofUploadedBy: uploadedBy,
       CollectionProofUploadedDate: new Date(),
