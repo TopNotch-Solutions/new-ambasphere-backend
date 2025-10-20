@@ -761,7 +761,7 @@ exports.verifyProbation = async (req, res) => {
       // APPROVE: Update handset record
       await handset.update({
         ProbationVerified: true,
-        ProbationVerifiedBy: verifiedBy || "Finance Team",
+        ProbationVerifiedBy: verifiedBy,
         ProbationVerifiedDate: new Date(),
         Status: "Probation Verified",
         Notes: notes || `Probation verification completed.`
