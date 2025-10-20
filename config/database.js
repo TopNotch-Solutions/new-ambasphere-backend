@@ -6,6 +6,7 @@ const sequelize = new Sequelize({
     password: "Ambasphere",
     database: "airtimemanagement",
     dialect: "mysql",
+    attributeBehavior: "unsafe-legacy",
      dialectOptions: {
     // This restores v5 behavior
     attributeBehavior: "unsafe-legacy"
