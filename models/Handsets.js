@@ -165,6 +165,8 @@ const Handsets = sequelize.define(
     WithinLimit: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
+      field: "LimitChecked",
+      defaultValue: false,
     },
     ExcessAmount: {
       type: DataTypes.FLOAT,

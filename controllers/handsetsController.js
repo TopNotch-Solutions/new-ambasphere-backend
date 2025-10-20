@@ -263,12 +263,19 @@ exports.postHandset = async (req, res) => {
       finalRenewalDate = new Date(existingHandset.RenewalDate);
     }
 
+    // Determine WithinLimit based on ExcessAmount at submission time
+    const submittedExcessAmount = req.body.ExcessAmount !== undefined && req.body.ExcessAmount !== null
+      ? parseFloat(req.body.ExcessAmount)
+      : 0;
+    const withinLimitAtSubmit = !(submittedExcessAmount > 0);
+
     const newHandset = await Handsets.create({
       EmployeeCode,
       AllocationID: AllocationID || 1, // Use provided AllocationID or default to 1
       HandsetName,
       HandsetPrice: cleanedHandsetPrice,
       AccessFeePaid: parseFloat(AccessFeePaid) || 0,
+      ExcessAmount: isNaN(submittedExcessAmount) ? 0 : submittedExcessAmount,
       RequestDate: RequestDate ? new Date(RequestDate) : new Date(),
       CollectionDate: hasCollectionDate ? new Date(CollectionDate) : null,
       RenewalDate: finalRenewalDate,
@@ -276,6 +283,7 @@ exports.postHandset = async (req, res) => {
       RequestType: requestType, // Use automatically determined request type
       RequestMethod: 'Ambasphere System',
       ProbationVerified: requestType === 'Renewal' ? true : false, // Auto-verify probation for renewals
+      WithinLimit: withinLimitAtSubmit,
       IMEINumber: IMEINumber || null,
       DeviceLocation: DeviceLocation || null,
       StoreName: StoreName || null
@@ -1718,6 +1726,7 @@ exports.confirmPayment = async (req, res) => {
       PaymentConfirmed: true,
       PaymentConfirmedBy: confirmedBy,
       PaymentConfirmedDate: new Date(),
+      WithinLimit: true,
       Status: "Payment Confirmed"
     });
 
